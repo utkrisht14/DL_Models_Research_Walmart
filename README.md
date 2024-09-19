@@ -1,5 +1,5 @@
 <h2> Introduction: </h2>
-The aim of the project was to try various <b> deep learning models </b> that are published in the <b> research paper. </b> <br/>
+The aim of the project was to try various <b> deep learning models </b> that are published in the <b> research paper. </b> 
 
 <b> Dataset selection </b>- To evaluate whether a model is able to capture all the nuances in the data, Walmart share prices seemed to be a good option because of thefollowing reasons:
 1. Walmart stock prices reflect seasonal retail cycles and macroeconomic factors, offering complex patterns ideal for deep learning time-series models.
