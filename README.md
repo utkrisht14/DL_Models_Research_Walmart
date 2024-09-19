@@ -24,6 +24,7 @@ $$
 To find the best window size, the dataset was trained on 7 days, 20 days, 50 days and 100 days. The aim was to capture the short-term as well as the long-term pattern.   
 
 <h2> Starting Models: </h2> Next task was to try various models.  
+<br/>
 <b> Model-1: Long Short Term Memory (LSTM) </b> LSTMs are basic comparison points in any time-series forecasting. Gennerally they perform best when the data is not very large and so is the case with ourdataset. 
 So, it was expected to perform good. I tried to compare against many window size as mentioned above, the best R<sup>2</sup>score was given by 100 days window. So, model is capturing long-tern trend. <br/>
 <div style="display: flex;">
