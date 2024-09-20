@@ -26,7 +26,8 @@ To find the best window size, the dataset was trained on 7 days, 20 days, 50 day
 <h2> Starting Models: </h2> Next task was to try various models.  
 <br/>
 <b> Model-1: Long Short Term Memory (LSTM) </b> LSTMs are basic comparison points in any time-series forecasting. Gennerally they perform best when the data is not very large and so is the case with ourdataset. 
-So, it was expected to perform good. I tried to compare against many window size as mentioned above, the best R<sup>2</sup>score was given by 100 days window. So, model is capturing long-tern trend. <br/>
+So, it was expected to perform good. I tried to compare against many window size as mentioned above, the best R<sup>2</sup>score was given by 100 days window. So, model is capturing long-tern trend. 
+
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (LSTM).png" alt="R2-Score LSTM Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (LSTM).png" alt="Test Loss LSTM Models" width="400" height="200">
@@ -41,3 +42,9 @@ The graph shows that the 50-day window size performs the best among all tested c
   <img src="scores_log/R-Square/R-Square (GRU).png" alt="R2-Score GRU Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (GRU).png" alt="Test Loss GRU Models" width="400" height="200">
 </div>
+
+
+<b> Model-3: Temporal Convolution Model (TCN) </b>: TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
+
+Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. If I compare the performance of this model as compared to RNN variants, the performance is not so good. Like the GRU, here also 50 days window size works best.  
+
