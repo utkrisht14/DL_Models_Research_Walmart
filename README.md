@@ -1,5 +1,5 @@
 <h2> Introduction: </h2>
-The aim of the project was to try various <b> deep learning models </b> that are published in the <b> research paper. </b> 
+The aim of the project is to try various <b> deep learning models </b> that are published in the <b> research paper. </b> <br/> <br/>
 
 <b> Dataset selection </b>- To evaluate whether a model is able to capture all the nuances in the data, Walmart share prices seemed to be a good option because of thefollowing reasons:
 1. Walmart stock prices reflect seasonal retail cycles and macroeconomic factors, offering complex patterns ideal for deep learning time-series models.
@@ -30,4 +30,14 @@ So, it was expected to perform good. I tried to compare against many window size
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (LSTM).png" alt="R2-Score LSTM Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (LSTM).png" alt="Test Loss LSTM Models" width="400" height="200">
+</div>
+
+<br/> <br/> 
+<b> Model-2: </b> GRU (Gated Recurrent Unit) models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
+
+The graph shows that the 50-day window size performs the best among all tested configurations, achieving the highest R-square value, indicating it captures the optimal amount of historical data for accurate predictions. Shorter windows (7 and 20 days) underperform, suggesting insufficient historical context, while the 100-day window, though capturing more data, does not improve further, possibly due to overfitting or increased noise.
+
+<div style="display: flex;">
+  <img src="scores_log/R-Square/R-Square (GRU).png" alt="R2-Score GRU Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/Test Loss/Test Loss (GRU).png" alt="Test Loss GRU Models" width="400" height="200">
 </div>
