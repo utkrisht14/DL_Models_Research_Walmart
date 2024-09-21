@@ -63,11 +63,12 @@ Similarly polynomial trend was captured using generating polynomial bases for bo
 
 These are parameters that were used for this model:
 <table> 
+<tr> <td> <b> Factor </td> <td> <b> Size </b> </td> </tr>
 <tr> <td> Hidden Size </td> <td> 256 </td> </tr>
 <tr> <td> Number of blocks (trend, seasonality) </td> <td> 4 </td> </tr>
 <tr> <td> Number of Layers </td> <td> 3 </td> </tr>
 <tr> <td> Forecast Length </td> <td> 1 </td> </tr>
-<tr> <td> Harmonics </td> <td> 10 </td> </tr>
+<tr> <td> Number of harmonics for Fourier Series </td> <td> 10 </td> </tr>
 <tr> <td> Polynomial degree for trend block </td> <td> 2 </td> </tr>
 </table>  
 
