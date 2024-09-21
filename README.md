@@ -86,13 +86,39 @@ The graph below shows that model perform best till what all other models that I 
 <b> Model-5: Transformer Model </b> <br/>
 The Transformer model, originally designed for natural language processing tasks, has emerged as a powerful architecture for time series forecasting due to its ability to capture complex temporal dependencies and patterns. Unlike traditional recurrent neural networks (RNNs) that process data sequentially, the Transformer employs self-attention mechanisms, allowing it to directly focus on the most relevant parts of the input sequence, regardless of their position. This capability makes it particularly effective for time series data, where capturing both short-term fluctuations and long-term trends is crucial.
 
+As mentioned transformer uses attention and self-attention mechanism, the Query, Key, and Value vectors are used in the self-attention mechanism to determine the relevance of each input token to others, allowing the model to focus on important parts of the sequence when making predictions. Queries are matched against Keys to generate attention scores, which are then applied to Values to produce the output, capturing the relationships between different time steps.  
+
 Here I impelmented the model from two points of view. In one I keep the learning rate constant and in another learning rate was changing as it was mentioned in the paper.  
 
 $$
 lrate = d_{model}^{-0.5} \cdot \min\left(stepnum^{-0.5}, stepnum \cdot warmupsteps^{-1.5}\right)
 $$
 
+Also the positional encoding were added using the formula as mentioned in the paper. 
+
+$$
+PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{model}}}}\right)
+$$
+
+$$
+PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{model}}}}\right)
+$$
+
+Sine positional encoding were applied at the even position and Cosine positional encoding were applied at odd position. Learning rate scheduler was also adjusted according to the paper. The only difference is that instead of by-default 4000 warm-up steps, it was reduced down to 500 steps. Warmup steps refer to the initial phase in the training process where the learning rate is gradually increased over a specified number of steps (in this case, 4000 steps) before transitioning to the main learning rate schedule. Setting warmup steps to 4000 means that during the first 4000 training steps, the learning rate incrementally rises from zero to its peak value, which helps in stabilizing the early stages of training and avoiding abrupt updates to the model’s weights. 
+
+But since my dataset is relatively small; reaching 4000 warmup steps might span a significant portion of overall training, potentially leading to an overly conservative learning rate for much of the training period. In this scenario, adjusting the number of warmup steps to a smaller number (like 500 in this case) would allow the model to reach its effective learning rate quicker, making better use of the limited epochs available for more aggressive learning once the warmup phase is complete.
+
+But model seems to perform better when learnig rate was constant which is clearly evident from the graph. In fact, adding the `LearingRateScheduler` like paper, has made the program worse in this case. Below are the parameters that have been used in this case. They are reduced in value, to fit according to this dataset.
+
+<table> 
+<tr> <td> <b> Factor </td> <td> <b> Size </b> </td> </tr>
+<tr> <td> Transformer embedding Size </td> <td> 128 </td> </tr>
+<tr> <td> Number of attention heads (trend, seasonality) </td> <td> 4 </td> </tr>
+<tr> <td> Number of transformer encoder layers </td> <td> 1 </td> </tr>
+<tr> <td> Forecast Length </td> <td> 1 </td> </tr>
+<tr> <td> Hidden layer in feed forward network </td> <td> 64 </td> </tr>
+<tr> <td> Dropout Rate </td> <td> 0.1 </td> </tr>
+</table>  
 
 
-
-
+Also please note that <b> decoder </b> is not used in this case because the task involves one-step prediction, where the model directly forecasts the next value in the sequence without requiring the autoregressive decoding process typically used for generating sequential outputs in language modeling tasks.
