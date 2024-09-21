@@ -252,7 +252,7 @@ Various model has been build to check the which model performs best on the data 
 | Temporal Fusion Transformer   | 20               | 6m 23s              | 0.62399  |
 | Informer                      | 20               | 6m 32s              | 0.76795  |
 
-So, from above N-Beats was our best model, followed by GRU. Transformer model didn't perform that well because of less data. The following table tries to summarize this:
+So, from above N-Beats was our best model, followed by GRU. Transformer model didn't perform that well because of less data. The following table tries to capture the reason and performance of the model:
 | Model Name                    | Strengths                                                     | Weaknesses                                                  | Reason for Performance                              |
 |-------------------------------|---------------------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------|
 | **LSTM**                      | Good at capturing sequential patterns; stable on smaller data | Limited long-term memory and struggles with complex patterns | Performed well due to effective handling of sequential dependencies in moderate data sizes. |
@@ -265,3 +265,42 @@ So, from above N-Beats was our best model, followed by GRU. Transformer model di
 
 
 The follwoing graphs shows all the time taken by all the models.
+### Model Running Times
+
+<table>
+  <tr>
+    <td>
+      <img src="scores_log/Running Time/Running Time (LSTM).png" alt="Running Time LSTM" width="300">
+      <p align="center"><b>LSTM</b></p>
+    </td>
+    <td>
+      <img src="scores_log/Running Time/Running Time (GRU).png" alt="Running Time GRU" width="300">
+      <p align="center"><b>GRU</b></p>
+    </td>
+    <td>
+      <img src="scores_log/Running Time/Running Time (Temporal Convolution Network).png" alt="Running Time TCN" width="300">
+      <p align="center"><b>Temporal Convolution Network</b></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="scores_log/Running Time/Running Time (N-Beats).png" alt="Running Time N-Beats" width="300">
+      <p align="center"><b>N-Beats</b></p>
+    </td>
+    <td>
+      <img src="scores_log/Running Time/Running Time (Transformer).png" alt="Running Time Transformer" width="300">
+      <p align="center"><b>Transformer</b></p>
+    </td>
+    <td>
+      <img src="scores_log/Running Time/Running Time (Temporal Fusion Transformer).png" alt="Running Time TFT" width="300">
+      <p align="center"><b>Temporal Fusion Transformer</b></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="scores_log/Running Time/Running Time (Informer).png" alt="Running Time Informer" width="300">
+      <p align="center"><b>Informer</b></p>
+    </td>
+  </tr>
+</table>
+
