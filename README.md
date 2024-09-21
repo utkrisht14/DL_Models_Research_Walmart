@@ -156,3 +156,29 @@ But even with this complex mechanism, the model was not able to perform better t
   <img src="scores_log/R-Square/R-Square (TFT).png" alt="R2-Score Transformer Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (TFT).png" alt="Test Loss Transformer Models" width="400" height="200">
 </div>
+
+Also this table summaraizes which are given time varying features and which are given as static feature in our model:
+<div style="display: flex;">
+<table> 
+<tr> <td> <b> Static Columns </td> <td> <b> Type of Variable </b> </td> </tr>
+<tr> <td> Consumer Price Index </td> <td> Continous </td> </tr>
+<tr> <td>  Consumer Confidence Indicator  </td> <td> Continous </td> </tr>
+<tr> <td> GDP Growth Rate </td> <td> Continous </td> </tr>
+<tr> <td> Day Before Weekend </td> <td> Binary </td> </tr>
+<tr> <td> Day Before Holiday </td> <td> Binary </td> </tr>
+<tr> <td> Day After Holiday </td> <td> Binary </td> </tr>
+<tr> <td> Day After Weekend </td> <td> Binary </td> </tr>
+</table>  
+
+<table> 
+<tr> <td> <b> Dynamic Columns </td> <td> <b> Type of Variable </b> </td> </tr>
+<tr> <td> Share opening price </td> <td> Continous </td> </tr>
+<tr> <td>  Share highest price   </td> <td> Continous </td> </tr>
+<tr> <td> Share lowest price </td> <td> Continous </td> </tr>
+<tr> <td> Relative Strength Index </td> <td> Continous </td> </tr>
+<tr> <td> Volatility Index </td> <td> Continous </td> </tr>
+<tr> <td> Day After Holiday </td> <td> Continous </td> </tr>
+<tr> <td> Oil Prices </td> <td> Continous </td> </tr>
+</table>  
+
+</div>
