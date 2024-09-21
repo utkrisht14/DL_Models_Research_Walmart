@@ -129,6 +129,6 @@ Also please note that <b> decoder </b> is not used in this case because the task
 
 Below graph shows the r-square with or without learning rate scheduler. 
 <div style="display: flex;">
-  <img src="scores_log/R-Square/R-Square (Transformer).png" alt="R2-Score N-BEATS Models" width="400" height="200" style="margin-right: 10px;">
-  <img src="scores_log/Test Loss/Test Loss (Transformer).png" alt="Test Loss N-BEATS Models" width="400" height="200">
+  <img src="scores_log/R-Square/R-Square (Transformer).png" alt="R2-Score Transformer Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/Test Loss/Test Loss (Transformers).png" alt="Test Loss Transformer Models" width="400" height="200">
 </div>
