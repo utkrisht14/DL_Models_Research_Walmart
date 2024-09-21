@@ -225,7 +225,6 @@ Here are the parameters that are used in the model:
 <tr> <td> <b> Factor </td> <td> <b> Size </b> </td> </tr>
 <tr> <td> Dimension of the model's embedding space </td> <td> 128  </td> </tr>
 <tr> <td> Number of attention heads  </td> <td> 8 </td> </tr>
-<tr> <td> Number of transformer encoder layers </td> <td> 1 </td> </tr>
 <tr> <td> Number of encoder layers </td> <td> 1 </td> </tr>
 <tr> <td> Number of decoder layers </td> <td> 1 </td> </tr>
 <tr> <td> Dropout Rate </td> <td> 0.2 </td> </tr>
