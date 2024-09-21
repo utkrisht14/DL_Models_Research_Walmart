@@ -48,7 +48,7 @@ The graph shows that the 50-day window size performs the best among all tested c
   <img src="scores_log/Test Loss/Test Loss (GRU).png" alt="Test Loss GRU Models" width="400" height="200">
 </div>
 
-<br/> <br/>
+<br/> 
 
 <b> Model-3: Temporal Convolution Model (TCN) </b>: <br/>  
 TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
@@ -61,6 +61,7 @@ However, compared to RNN variants, I started with a lower learning rate. The lea
   <img src="scores_log/R-Square/R-Square (TCN).png" alt="R2-Score TCN Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (TCN).png" alt="Test Loss TCN Models" width="400" height="200">
 </div>
+<br/>
 
 <b> Model-4: N-Beats </b> <br/> 
 The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
