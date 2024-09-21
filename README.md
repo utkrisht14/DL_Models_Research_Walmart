@@ -235,10 +235,10 @@ From the below graph, the model has shown good performance when the given window
 2. With a limited dataset, longer windows consume a larger portion of the available data, leading to sparse training samples and potentially inadequate learning of relevant patterns. This scarcity of data can hinder the model's ability to generalize well, making shorter windows like 20 more effective as they utilize the available data more efficiently without overfitting.
 
 <div style="display: flex;">
-  <img src="scores_log/R-Square/R-Square (Informer). png" alt="R2-Score Informer Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/R-Square/R-Square (Informer) .png" alt="R2-Score Informer Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (Informer).png" alt="Test Loss Informer Models" width="400" height="200">
 </div>
 
 Below is the given model architecture of the Informer as proposed in research paper: <br/>
- <img src="scores_log/tft.png" alt="Informer Model Architecture" width="500" height="220" style="margin-right: 10px;">
+ <img src="scores_log/informer.png" alt="Informer Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
