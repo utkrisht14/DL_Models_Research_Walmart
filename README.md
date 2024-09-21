@@ -127,8 +127,13 @@ But model seems to perform better when learnig rate was constant which is clearl
 
 Also please note that <b> decoder </b> is not used in this case because the task involves one-step prediction, where the model directly forecasts the next value in the sequence without requiring the autoregressive decoding process typically used for generating sequential outputs in language modeling tasks.
 
-Below graph shows the r-square with or without learning rate scheduler. 
+Below graph shows the R-square with or without learning rate scheduler. 
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (Transformer).png" alt="R2-Score Transformer Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (Transformers).png" alt="Test Loss Transformer Models" width="400" height="200">
 </div>
+
+As we can see that above in the image, R-square is negative with learning rate scheduler as mentioned in paper, the reason is beacsue it might not be suitable for the data like this. Also because of the scheduler test loss was very high in the beginning but later it strats to go down. So, overall this model because of lack of data has performed worse than RNN variants like GRU and LSTM even with stable learning rate. The following could be the reasons behind this:
+1. Insufficient Data Size: Transformers are highly data-hungry and perform best with large datasets. With only 10,000 rows, the model may struggle to learn meaningful patterns and generalize well, leading to underperformance compared to LSTM and GRU, which are better suited for smaller datasets.
+2. Lack of Temporal Inductive Bias: Unlike LSTM and GRU models, which are designed to capture sequential dependencies with their recurrent structures, Transformers rely purely on self-attention mechanisms and may not inherently capture temporal patterns as effectively in smaller datasets, leading to poorer performance.
+3. Overfitting Due to Model Complexity: Transformers have a high number of parameters, making them prone to overfitting when trained on smaller datasets. This can lead to poor generalization, especially compared to LSTMs and GRUs, which are simpler and more robust in such settings.
