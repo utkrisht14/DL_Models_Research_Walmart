@@ -304,8 +304,15 @@ The follwoing graphs shows all the time taken by all the models. Please note tha
 </table>
 
 <h2> Future Prospects: </h2>
-In this research setup, I only tried some popular deep learning algorithms for time series forecasting. But still there are other algorithms which could be tried in the future like two algorithms by Amazon: <i>DeepAR</i> and <i>Chronos</i>. Similarly <b> zero-shot </b> algorithms like <i>TimeGPT</i> could also be used to see how is the performance when model hasn't seen any data. If the performance is good like as <i>TimeGPT</i> is also trianed on financial data, it might be worth to consider it. Apart from this other new breakthrough in AI, like diffusion models <i>(though used in generating images)</i> could still be interesting to try.
+In this research setup, I tried some popular deep learning algorithms for time series forecasting. However, there are other algorithms that could be explored in the future, such as Amazon's DeepAR and Chronos. Similarly, zero-shot algorithms like TimeGPT could be used to assess performance when the model has not seen any specific data. If the performance is promising—especially since TimeGPT is also trained on financial data—it might be worth considering. Additionally, other new breakthroughs in AI, such as diffusion models (though primarily used for generating images), could be interesting to try.
 
-Further these models could be tried on datasets like M3 and M4, which has all kind of seasonality from dialy, hourly to yearly etc. 
+Furthermore, these models could be tested on datasets like M3 and M4, which encompass various types of seasonality, including daily, hourly, and yearly patterns. 
 
-<b> Note: </b> This research was done only for experimental purpose, not for any investment point of view. 
+<b> Note: </b> This research was conducted for experimental purposes only, not for any investment purposes.
+
+
+
+
+
+
+ 
