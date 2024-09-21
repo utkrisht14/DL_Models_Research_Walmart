@@ -240,7 +240,7 @@ Below is the given model architecture of the Informer as proposed in research pa
  <img src="scores_log/informer.png" alt="Informer Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
 <h2> Results: </h2>
-Various model has been build to check the which model performs best on the data given. Since dataset was small, in most of the cases RNN variants outperfom the Transfomer models. Also window size of 20 has shown promising output as compared to other window size. Out of all the models, <b> N-Beats </b> model has shown best performance. Below table summarizes for which model, was the best window size and also mentione the running time. Please note that there is also `EarlyStopping` function is applied to it. 
+Various model has been build to check the which model performs best on the data given. Since dataset was small, in most of the cases RNN variants outperfom the Transfomer models. Also window size of 20 has shown promising output as compared to other window size. Out of all the models, <b> N-Beats </b> model has shown best performance. Below table summarizes for which model, was the best window size and also mentione the running time. Please note that there is also `EarlyStopping` function is applied to it. <br/>
 
 | Model Name                    | Best Window Size | Running time on GPU | R2-Score |
 |-------------------------------|------------------|---------------------|----------|
@@ -252,3 +252,16 @@ Various model has been build to check the which model performs best on the data 
 | Temporal Fusion Transformer   | 20               | 6m 23s              | 0.62399  |
 | Informer                      | 20               | 6m 32s              | 0.76795  |
 
+So, from above N-Beats was our best model, followed by GRU. Transformer model didn't perform that well because of less data. The following table tries to summarize this:
+| Model Name                    | Strengths                                                     | Weaknesses                                                  | Reason for Performance                              |
+|-------------------------------|---------------------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------|
+| **LSTM**                      | Good at capturing sequential patterns; stable on smaller data | Limited long-term memory and struggles with complex patterns | Performed well due to effective handling of sequential dependencies in moderate data sizes. |
+| **GRU**                       | Simplified structure; faster and more efficient than LSTM     | Can still miss long-range dependencies                      | Performed best among recurrent models due to its efficient gate structure and fewer parameters. |
+| **Temporal Convolution Network** | Captures temporal dependencies with parallel processing    | Limited by fixed receptive fields; less flexible for varying patterns | Performs well with shorter windows due to its effective convolutional blocks but lacks global pattern recognition. |
+| **N-Beats**                   | Strong for trend and seasonality capture; interpretable       | High training time and data-hungry                          | Performed best overall due to its ability to directly model trends and seasonality with residual blocks. |
+| **Transformer (No LR Scheduler)** | Excellent at capturing global dependencies; parallelizable | Struggles on smaller datasets; overfits easily              | Underperformed due to data inefficiency and lack of temporal inductive biases. |
+| **Temporal Fusion Transformer**   | Combines RNN and attention; interpretable; handles multivariate inputs | High computational cost; prone to overfitting               | Struggled due to data complexity and model’s sensitivity to hyperparameter tuning. |
+| **Informer**                  | Efficient attention mechanism; scales well with large data    | Still computationally intensive; requires tuning            | Balanced performance due to selective attention mechanism but lacked deeper recurrent context. |
+
+
+The follwoing graphs shows all the time taken by all the models.
