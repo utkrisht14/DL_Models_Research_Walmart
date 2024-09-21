@@ -94,6 +94,9 @@ The graph below shows that model perform best till what all other models that I 
 
 <br/>
 
+Below is the given model architecture of the N-Beats as proposed in research paper: <br/>
+ <img src="scores_log/nbeats.png" alt="N-Beats Model Architecture" width="500" height="250" style="margin-right: 10px;">
+
 <b> Model-5: Transformer Model </b> <br/>
 The Transformer model, originally designed for natural language processing tasks, has emerged as a powerful architecture for time series forecasting due to its ability to capture complex temporal dependencies and patterns. Unlike traditional recurrent neural networks (RNNs) that process data sequentially, the Transformer employs self-attention mechanisms, allowing it to directly focus on the most relevant parts of the input sequence, regardless of their position. This capability makes it particularly effective for time series data, where capturing both short-term fluctuations and long-term trends is crucial.
 
