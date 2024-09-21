@@ -207,4 +207,30 @@ Oil Prices | Continuous
 
 </div>
 
+Below is the given model architecture of the Temporal Fusion Transformer (TFT) as proposed in research paper: <br/>
+ <img src="scores_log/tft.png" alt="TFT Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
+<b> Model-7: Informer Model </b> <br/>
+The Informer model was developed to address the challenges of long-sequence time series forecasting, particularly the high computational cost and inefficiencies of standard Transformer models. Informer introduces a sparse self-attention mechanism that selectively attends to the most relevant parts of the sequence, significantly reducing memory and computation while maintaining high forecasting accuracy. By integrating an encoder-decoder architecture with enhanced positional encoding and attention distillation techniques, Informer effectively captures complex temporal dependencies, making it well-suited for large-scale, data-intensive forecasting tasks across various domains.
+
+Here is the workflow of the informer model:
+1. Positional Encoding: First task was to make the psoitional encoding. This is same as the transformer mode. This approach allows the Informer to maintain the order of the data, enhancing its ability to capture the sequential nature of time series.
+2. Informer Enocder & Decoder Layer: Next task was to design the encoder layer. The encoder layer integrates multi-head self-attention and a feedforward network with ELU activation, designed to capture both global dependencies and local patterns in the input data. By including layer normalization and residual connections, it is ensured that the network maintains stability and effective learning across deep layers.
+After encoder layer decoder layer was designed. The decoder consists of self-attention, cross-attention, and a feedforward network, enabling the model to attend to both current target sequences and encoder outputs. The use of cross-attention helps the model focus on relevant historical patterns that influence future predictions, effectively merging past and present information.
+So to summarize this part: The encoded data passes through the Informer Encoder Layer and Multi-Head Attention mechanisms, capturing both local and global dependencies, followed by the Informer Decoder Layer that integrates past and present information.
+3. Output Projection to Final Prediction: In the last task, the processed information is passed through an output projection layer, generating the final prediction, completing the forecasting process.
+
+Here are the parameters that are used in the model:
+<table> 
+<tr> <td> <b> Factor </td> <td> <b> Size </b> </td> </tr>
+<tr> <td> Dimension of the model's embedding space </td> <td> 128  </td> </tr>
+<tr> <td> Number of attention heads  </td> <td> 8 </td> </tr>
+<tr> <td> Number of transformer encoder layers </td> <td> 1 </td> </tr>
+<tr> <td> Number of encoder layers </td> <td> 1 </td> </tr>
+<tr> <td> Number of decoder layers </td> <td> 1 </td> </tr>
+<tr> <td> Dropout Rate </td> <td> 0.2 </td> </tr>
+</table>  
+
+From the below graph, the model has shown good performance when the given window size was the 20. But it also showed the good performance when the window size was 100, highest in our case. But according to the model's value proposition, model should show good performance on 100 days window size than 20 days window size. The resoans could be following:
+1. Here not all parts of the long sequence may be relevant for the prediction task. A shorter window size (20 in this case) allows the model to focus on the most recent and relevant patterns without being overwhelmed by less relevant historical data, leading to better performance.
+2. With a limited dataset, longer windows consume a larger portion of the available data, leading to sparse training samples and potentially inadequate learning of relevant patterns. This scarcity of data can hinder the model's ability to generalize well, making shorter windows like 20 more effective as they utilize the available data more efficiently without overfitting.
