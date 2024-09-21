@@ -265,7 +265,7 @@ So, from above N-Beats was our best model, followed by GRU. Transformer model di
 
 
 The follwoing graphs shows all the time taken by all the models.
-### Model Running Times
+### Model Running Times (on GPU)
 
 <table>
   <tr>
@@ -278,7 +278,7 @@ The follwoing graphs shows all the time taken by all the models.
       <p align="center"><b>GRU</b></p>
     </td>
     <td>
-      <img src="scores_log/Running Time/Running Time (Temporal Convolution Network).png" alt="Running Time TCN" width="300">
+      <img src="scores_log/Running Time/Running Time (TCN).png" alt="Running Time TCN" width="300">
       <p align="center"><b>Temporal Convolution Network</b></p>
     </td>
   </tr>
@@ -288,11 +288,11 @@ The follwoing graphs shows all the time taken by all the models.
       <p align="center"><b>N-Beats</b></p>
     </td>
     <td>
-      <img src="scores_log/Running Time/Running Time (Transformer).png" alt="Running Time Transformer" width="300">
+      <img src="scores_log/Running Time/Running Time (Transformers).png" alt="Running Time Transformer" width="300">
       <p align="center"><b>Transformer</b></p>
     </td>
     <td>
-      <img src="scores_log/Running Time/Running Time (Temporal Fusion Transformer).png" alt="Running Time TFT" width="300">
+      <img src="scores_log/Running Time/Running Time (TFT).png" alt="Running Time TFT" width="300">
       <p align="center"><b>Temporal Fusion Transformer</b></p>
     </td>
   </tr>
