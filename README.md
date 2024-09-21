@@ -264,9 +264,8 @@ So, from above N-Beats was our best model, followed by GRU. Transformer model di
 | **Informer**                  | Efficient attention mechanism; scales well with large data    | Still computationally intensive; requires tuning            | Balanced performance due to selective attention mechanism but lacked deeper recurrent context. |
 
 
-The follwoing graphs shows all the time taken by all the models.
 ### Model Running Times (on GPU)
-
+The follwoing graphs shows all the time taken by all the models. Please note that training might stop early because of `EarlyStopping`. These graph could be used to compare accuracy vs training time.   
 <table>
   <tr>
     <td>
@@ -304,3 +303,9 @@ The follwoing graphs shows all the time taken by all the models.
   </tr>
 </table>
 
+<h2> Future Prospects: </h2>
+In this research setup, I only tried some popular deep learning algorithms for time series forecasting. But still there are other algorithms which could be tried in the future like two algorithms by Amazon: <i>DeepAR</i> and <i>Chronos</i>. Similarly <b> zero-shot </b> algorithms like <i>TimeGPT</i> could also be used to see how is the performance when model hasn't seen any data. If the performance is good like as <i>TimeGPT</i> is also trianed on financial data, it might be worth to consider it. Apart from this other new breakthrough in AI, like diffusion models <i>(though used in generating images)</i> could still be interesting to try.
+
+Further these models could be tried on datasets like M3 and M4, which has all kind of seasonality from dialy, hourly to yearly etc. 
+
+<b> Note: </b> This research was done only for experimental purpose, not for any investment point of view. 
