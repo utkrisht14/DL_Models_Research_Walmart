@@ -8,7 +8,7 @@ The aim of the project is to try various <b> deep learning models </b> that are 
 
 Hence, Walmart stock prices offer complex seasonal patterns, macroeconomic influences, and ample historical data for deep learning time-series forecasting models. This combination makes it an ideal candidate for exploring the effectiveness of various forecasting architectures and their ability to generalize across varying market conditions.
 
-<b> Dataset Source & Feature Engineering: </b> The data was downloaded from Yahoo Finance and the Federal Reserve Bank. However, what separates deep learning models from other ML models or statistical methods is the reduced need for feature engineering. At the same time, DL models also require a lot of data. 
+<b> Dataset Source & Feature Engineering: </b> The data was downloaded from Yahoo Finance and the Federal Reserve Bank. What separates deep learning models from other ML models or statistical methods is the reduced need for feature engineering. At the same time, DL models also require a lot of data. 
 So, to provide more features for the model to identify patterns, several features were provided that offer information about macroeconomic trends such as the Consumer Price Index, unemployment rate, and GDP growth rate.
 
 Also, exogenous variables like oil prices and gold prices were added. Furthermore, binary variables like a day before Black Friday, holidays like Christmas, etc., also have a significant impact on sales and hence share prices. So, they were also taken into consideration.
