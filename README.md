@@ -89,7 +89,7 @@ The Transformer model, originally designed for natural language processing tasks
 Here I impelmented the model from two points of view. In one I keep the learning rate constant and in another learning rate was changing as it was mentioned in the paper.  
 
 $$
-lrate = d_{model}^{-0.5} \cdot \min\left(step\_num^{-0.5}, step num \cdot warmup steps^{-1.5}\right)
+lrate = d_{model}^{-0.5} \cdot \min\left(stepnum^{-0.5}, stepnum \cdot warmupsteps^{-1.5}\right)
 $$
 
 
