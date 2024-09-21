@@ -114,7 +114,7 @@ Sine positional encoding were applied at the even position and Cosine positional
 
 But since my dataset is relatively small; reaching 4000 warmup steps might span a significant portion of overall training, potentially leading to an overly conservative learning rate for much of the training period. In this scenario, adjusting the number of warmup steps to a smaller number (like 500 in this case) would allow the model to reach its effective learning rate quicker, making better use of the limited epochs available for more aggressive learning once the warmup phase is complete.
 
-But model seems to perform better when learnig rate was constant which is clearly evident from the graph. In fact, adding the `LearingRateScheduler` like paper, has made the program worse in this case. Below are the parameters that have been used in this case. They are reduced in value, to fit according to this dataset.
+But model seems to perform better when learning rate was constant which is clearly evident from the graph. In fact, adding the `LearingRateScheduler` like paper, has made the program worse in this case. Below are the parameters that have been used in this case. They are reduced in value, to fit according to this dataset.
 
 <table> 
 <tr> <td> <b> Factor </td> <td> <b> Size </b> </td> </tr>
