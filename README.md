@@ -48,6 +48,7 @@ The graph shows that the 50-day window size performs the best among all tested c
   <img src="scores_log/Test Loss/Test Loss (GRU).png" alt="Test Loss GRU Models" width="400" height="200">
 </div>
 
+<br/> <br/>
 
 <b> Model-3: Temporal Convolution Model (TCN) </b>: <br/>  
 TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
