@@ -160,26 +160,35 @@ But even with this complex mechanism, the model was not able to perform better t
 Also this table summaraizes which are given time varying features and which are given as static feature in our model:
 <div style="display: flex; justify-content: space-between;">
 
-<table style="margin-right: 20px;">
-<tr> <td> <b> Static Columns </b> </td> <td> <b> Type of Variable </b> </td> </tr>
-<tr> <td> Consumer Price Index </td> <td> Continuous </td> </tr>
-<tr> <td> Consumer Confidence Indicator </td> <td> Continuous </td> </tr>
-<tr> <td> GDP Growth Rate </td> <td> Continuous </td> </tr>
-<tr> <td> Day Before Weekend </td> <td> Binary </td> </tr>
-<tr> <td> Day Before Holiday </td> <td> Binary </td> </tr>
-<tr> <td> Day After Holiday </td> <td> Binary </td> </tr>
-<tr> <td> Day After Weekend </td> <td> Binary </td> </tr>
-</table>
-
 <table>
-<tr> <td> <b> Dynamic Columns </b> </td> <td> <b> Type of Variable </b> </td> </tr>
-<tr> <td> Share opening price </td> <td> Continuous </td> </tr>
-<tr> <td> Share highest price </td> <td> Continuous </td> </tr>
-<tr> <td> Share lowest price </td> <td> Continuous </td> </tr>
-<tr> <td> Relative Strength Index </td> <td> Continuous </td> </tr>
-<tr> <td> Volatility Index </td> <td> Continuous </td> </tr>
-<tr> <td> Day After Holiday </td> <td> Continuous </td> </tr>
-<tr> <td> Oil Prices </td> <td> Continuous </td> </tr>
+<tr>
+<td>
+
+**Static Columns** | **Type of Variable**
+--- | ---
+Consumer Price Index | Continuous
+Consumer Confidence Indicator | Continuous
+GDP Growth Rate | Continuous
+Day Before Weekend | Binary
+Day Before Holiday | Binary
+Day After Holiday | Binary
+Day After Weekend | Binary
+
+</td>
+<td>
+
+**Dynamic Columns** | **Type of Variable**
+--- | ---
+Share opening price | Continuous
+Share highest price | Continuous
+Share lowest price | Continuous
+Relative Strength Index | Continuous
+Volatility Index | Continuous
+Day After Holiday | Continuous
+Oil Prices | Continuous
+
+</td>
+</tr> 
 </table>
 
 </div>
