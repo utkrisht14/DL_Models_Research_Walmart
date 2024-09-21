@@ -23,8 +23,9 @@ df = pd.read_csv("walmart_dataset.csv", index_col="Date", parse_dates=True)
 # Define the positional encoding for Informer
 # Adds temporal information to the input sequence. It is just as in case of Transformers
 class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, dropout=0.1, max_len=5000):
+    def __init__(self, d_model, dropout=0.1, max_len=5000, batch_first=True):
         super().__init__()
+        self.batch_first = batch_first
         self.dropout = nn.Dropout(p=dropout)
 
         pe = torch.zeros(max_len, d_model)
@@ -32,27 +33,35 @@ class PositionalEncoding(nn.Module):
         # Make a common division term.
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
 
-        # Apply the sine encoding to even places starting from zero
+        # Apply the sine encoding to even places starting from zero and at even position
         pe[:, 0::2] = torch.sin(position * div_term)
 
-        # Apply the cosine encoding to even places starting from one
+        # Apply the cosine encoding to even places starting from one and at odd position
         pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0).transpose(0, 1)
 
-        # Through register_buffer so that it doesn't change during training
-        self.register_buffer('pe', pe)
+        # For the purpose of adding positional encoding
+        if self.batch_first:
+            pe = pe.unsqueeze(0)  # Shape: (1, max_len, d_model)
+        else:
+            pe = pe.unsqueeze(1)  # Shape: (max_len, 1, d_model)
+
+        # Register the positional encoding matrix as a buffer, meaning it won't be updated during training
+        self.register_buffer("pe", pe)
 
     def forward(self, x):
         # Positional encoding should be on the same device as the input `x`
-        x = x + self.pe[:x.size(0), :].to(x.device)  # Move self.pe to the device of x
+        if self.batch_first:
+            x = x + self.pe[:, :x.size(1), :].to(x.device)  # Shape: [batch_size, seq_len, d_model]
+        else:
+            x = x + self.pe[:x.size(0), :, :].to(x.device)  # Shape: [seq_len, batch_size, d_model]
         return self.dropout(x)
 
 # Informer encoder layer
 class InformerEncoderLayer(nn.Module):
-    def __init__(self, d_model, n_heads, d_ff, dropout =0.1):
+    def __init__(self, d_model, n_heads, d_ff, dropout=0.1):
         super().__init__()
-        # Multi-head self-attention to capturing temporal dependencies
-        self.self_attn = nn.MultiheadAttention(d_model, n_heads, dropout= dropout)
+        # Multi-head self-attention with batch_first=True
+        self.self_attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
 
         # Feedforward network with ELU activation as in paper
         self.feed_forward = nn.Sequential(
@@ -65,7 +74,7 @@ class InformerEncoderLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, src):
-        # Apply self-attention with the residual connection and layer normalization
+        # Apply self-attention with residual connection and layer normalization
         attn_output, _ = self.self_attn(src, src, src)
         src = self.layer_norm1(src + self.dropout(attn_output))
 
@@ -74,13 +83,12 @@ class InformerEncoderLayer(nn.Module):
         src = self.layer_norm2(src + self.dropout(ff_output))
         return src
 
-
 # Informer Decoder Layer
 class InformerDecoderLayer(nn.Module):
     def __init__(self, d_model, n_heads, d_ff, dropout=0.1):
         super().__init__()
-        self.self_attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout)
-        self.cross_attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout)
+        self.self_attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
+        self.cross_attn = nn.MultiheadAttention(d_model, n_heads, dropout=dropout, batch_first=True)
 
         # Feedforward network uses ELU as per the paper
         self.feed_forward = nn.Sequential(
@@ -94,19 +102,11 @@ class InformerDecoderLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, tgt, memory):
-
-        batch_size, tgt_seq_len, d_model = tgt.shape
-        _, memory_seq_len, _ = memory.shape
-
-        # Reshape because batch_first=True
-        tgt = tgt.permute(1, 0, 2)  # Shape: [tgt_seq_len, batch_size, d_model]
-        memory = memory.permute(1, 0, 2)  # Shape: [memory_seq_len, batch_size, d_model]
-
-        # Self-attention (decoder side)
+        # Self-attention -> decoder side
         attn_output, _ = self.self_attn(tgt, tgt, tgt)
         tgt = self.layer_norm1(tgt + self.dropout(attn_output))
 
-        # Cross-attention (with encoder memory)
+        # Cross-attention -> with encoder memory
         attn_output, _ = self.cross_attn(tgt, memory, memory)
         tgt = self.layer_norm2(tgt + self.dropout(attn_output))
 
@@ -114,20 +114,14 @@ class InformerDecoderLayer(nn.Module):
         ff_output = self.feed_forward(tgt)
         tgt = self.layer_norm3(tgt + self.dropout(ff_output))
 
-        # Reshape tgt back to [batch_size, tgt_seq_len, d_model]
-        tgt = tgt.permute(1, 0, 2)
-
         return tgt
 
-
 # Informer model-based on the encoder-decoder architecture
-# Informer Model (Encoder-Decoder)
-
 class Informer(nn.Module):
     def __init__(self, input_size, d_model, n_heads, d_ff, num_encoder_layers, num_decoder_layers, dropout=0.1):
         super(Informer, self).__init__()
         self.input_proj = nn.Linear(input_size, d_model)  # Project the input to the model's embedding size
-        self.positional_encoding = PositionalEncoding(d_model, dropout)  # Positional encoding for temporal data
+        self.positional_encoding = PositionalEncoding(d_model, dropout, batch_first=True)  # Positional encoding for temporal data
 
         # Encoder layers
         self.encoder_layers = nn.ModuleList([
@@ -167,7 +161,6 @@ class Informer(nn.Module):
         output = self.output_proj(tgt[:, -1, :])  # Take the last time step of decoder output
         return output
 
-
 # Variables and Hyperparameters
 input_window_size = 7
 input_size = df.shape[1] - 1  # Number of input features (excluding the target column)
@@ -182,14 +175,16 @@ learning_rate = 1e-6  # Learning rate
 
 # Initialize the Informer model for 7 days
 model_informer_7 = Informer(input_size=input_size, d_model=d_model, n_heads=n_heads, d_ff=d_ff,
-                          num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
+                            num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
 
 # Loss function and optimizer
 criterion = nn.MSELoss()
 optimizer_7 = torch.optim.Adam(model_informer_7.parameters(), weight_decay=1e-5, lr=learning_rate)
 
 # Prepare the data loaders
-train_dataset_7, test_dataset_7, train_dataloader_7, test_dataloader_7 = prepare_dataloaders(df, label_column="Adj Close Target", input_window_size= input_window_size, prediction_window_size=1, batch_size=32)
+train_dataset_7, test_dataset_7, train_dataloader_7, test_dataloader_7 = prepare_dataloaders(
+    df, label_column="Adj Close Target", input_window_size=input_window_size, prediction_window_size=1, batch_size=32
+)
 
 # Train the model using Informer for a 7-day window forecast
 wandb.init(project="Walmart_Informer", name="Model Informer 7 Days Window")
@@ -213,13 +208,15 @@ wandb.finish()  # End the W&B run
 # Initialize the Informer model for 20 days
 input_window_size = 20
 model_informer_20 = Informer(input_size=input_size, d_model=d_model, n_heads=n_heads, d_ff=d_ff,
-                           num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
+                             num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
 
 # Loss function and optimizer
 optimizer_20 = torch.optim.Adam(model_informer_20.parameters(), weight_decay=1e-5, lr=learning_rate)
 
 # Prepare the data loaders
-train_dataset_20, test_dataset_20, train_dataloader_20, test_dataloader_20 = prepare_dataloaders(df, label_column="Adj Close Target", input_window_size= input_window_size, prediction_window_size=1, batch_size=32)
+train_dataset_20, test_dataset_20, train_dataloader_20, test_dataloader_20 = prepare_dataloaders(
+    df, label_column="Adj Close Target", input_window_size=input_window_size, prediction_window_size=1, batch_size=32
+)
 
 # Train the model using Informer for a 20-day window forecast
 wandb.init(project="Walmart_Informer", name="Model Informer 20 Days Window")
@@ -243,13 +240,15 @@ wandb.finish()  # End the W&B run
 # Initialize the Informer model for 50 days
 input_window_size = 50
 model_informer_50 = Informer(input_size=input_size, d_model=d_model, n_heads=n_heads, d_ff=d_ff,
-                           num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
+                             num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
 
 # Loss function and optimizer
 optimizer_50 = torch.optim.Adam(model_informer_50.parameters(), weight_decay=1e-5, lr=learning_rate)
 
 # Prepare the data loaders
-train_dataset_50, test_dataset_50, train_dataloader_50, test_dataloader_50 = prepare_dataloaders(df, label_column="Adj Close Target", input_window_size= input_window_size, prediction_window_size=1, batch_size=32)
+train_dataset_50, test_dataset_50, train_dataloader_50, test_dataloader_50 = prepare_dataloaders(
+    df, label_column="Adj Close Target", input_window_size=input_window_size, prediction_window_size=1, batch_size=32
+)
 
 # Train the model using Informer for a 50-day window forecast
 wandb.init(project="Walmart_Informer", name="Model Informer 50 Days Window")
@@ -273,13 +272,15 @@ wandb.finish()  # End the W&B run
 # Initialize the Informer model for 100 days
 input_window_size = 100
 model_informer_100 = Informer(input_size=input_size, d_model=d_model, n_heads=n_heads, d_ff=d_ff,
-                           num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
+                              num_encoder_layers=num_encoder_layers, num_decoder_layers=num_decoder_layers, dropout=dropout).to(device)
 
 # Optimizer
 optimizer_100 = torch.optim.Adam(model_informer_100.parameters(), weight_decay=1e-5, lr=learning_rate)
 
 # Prepare the data loaders
-train_dataset_100, test_dataset_100, train_dataloader_100, test_dataloader_100 = prepare_dataloaders(df, label_column="Adj Close Target", input_window_size= input_window_size, prediction_window_size=1, batch_size=32)
+train_dataset_100, test_dataset_100, train_dataloader_100, test_dataloader_100 = prepare_dataloaders(
+    df, label_column="Adj Close Target", input_window_size=input_window_size, prediction_window_size=1, batch_size=32
+)
 
 # Train the model using Informer for a 100-day window forecast
 wandb.init(project="Walmart_Informer", name="Model Informer 100 Days Window")
@@ -300,7 +301,7 @@ overall_preds_denorm_informer_100, overall_targets_denorm_informer_100, overall_
 
 wandb.finish()  # End the W&B run
 
-# Next we plot the plots of the data
+# Next we plot the data
 last_lookback_days = 100
 
 # Plot for 7 days window period
@@ -318,4 +319,3 @@ log_model_plot_overall_preds("Informer Model 50 Days- No Scheduler", overall_tar
 # Plot for 100 days window period
 log_model_plot_overall_preds("Informer Model 100 Days- No Scheduler", overall_targets_denorm_informer_100, overall_preds_denorm_informer_100,
                              last_lookback_days)
-
