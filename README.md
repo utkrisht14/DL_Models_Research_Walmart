@@ -46,6 +46,7 @@ The graph shows that the 50-day window size performs the best among all tested c
 
 <b> Model-3: Temporal Convolution Model (TCN) </b>: TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
 
-Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. If I compare the performance of this model as compared to RNN variants, the performance is not so good. Like the GRU, here also 50 days window size works best.  
+Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. When comparing the performance of this model to RNN variants, the performance is not as good. Similar to the GRU, the 50-day window size works best here as well.
 
-But as compared to RNN variants I started with lower learning rate. Also the learning rate for all window sizes were different and so was the number of epochs. Because lower learning rate and number of epochs would help here to avoid NaN values later in the training stage and would not cause the learning to stop. 
+However, compared to RNN variants, I started with a lower learning rate. The learning rate for all window sizes was different, as was the number of epochs. A lower learning rate and fewer epochs help avoid NaN values during the later stages of training and prevent the learning process from stopping.
+
