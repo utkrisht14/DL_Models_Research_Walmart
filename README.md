@@ -148,6 +148,9 @@ As we can see that above in the image, R-square is negative with learning rate s
 2. Lack of Temporal Inductive Bias: Unlike LSTM and GRU models, which are designed to capture sequential dependencies with their recurrent structures, Transformers rely purely on self-attention mechanisms and may not inherently capture temporal patterns as effectively in smaller datasets, leading to poorer performance.
 3. Overfitting Due to Model Complexity: Transformers have a high number of parameters, making them prone to overfitting when trained on smaller datasets. This can lead to poor generalization, especially compared to LSTMs and GRUs, which are simpler and more robust in such settings.
 
+Below is the given model architecture of the Transformer as proposed in research paper: <br/>
+ <img src="scores_log/transformer.png" alt="Transformer Model Architecture" width="500" height="220" style="margin-right: 10px;">
+
 <b> Model-6: Temporal Fusion Transformer </b> <br/>
 So, far we have seen that, we have either used RNN variants for prediction or in last model we have used attention mechanism architecture. But what if we can combine both of the architecture. Temporal Fusion Transformer (TFT) uses both RNN and attention mechanisms. Specifically, it employs recurrent neural networks (often GRU layers) to capture sequential dependencies and learn temporal patterns in the data. Simultaneously, it integrates attention mechanisms, including multi-head attention, to focus on the most relevant parts of the input sequence and dynamically weigh features. This combination allows TFT to effectively model both temporal dependencies and feature importance, enhancing its interpretability and performance in time series forecasting tasks.
 
