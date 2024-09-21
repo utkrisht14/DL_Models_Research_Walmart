@@ -63,6 +63,10 @@ However, compared to RNN variants, I started with a lower learning rate. The lea
 </div>
 <br/>
 
+Below is the given model architecture of the TCN as proposed in research paper:
+ <img src="scores_log/tcn.png" alt="TCN Model Architecture" width="400" height="200" style="margin-right: 10px;">
+
+
 <b> Model-4: N-Beats </b> <br/> 
 The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
 
