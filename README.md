@@ -48,5 +48,9 @@ The graph shows that the 50-day window size performs the best among all tested c
 
 Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. When comparing the performance of this model to RNN variants, the performance is not as good. Similar to the GRU, the 50-day window size works best here as well.
 
-However, compared to RNN variants, I started with a lower learning rate. The learning rate for all window sizes was different, as was the number of epochs. A lower learning rate and fewer epochs help avoid NaN values during the later stages of training and prevent the learning process from stopping.
+However, compared to RNN variants, I started with a lower learning rate. The learning rate for all window sizes was different, as was the number of epochs. A lower learning rate and fewer epochs help avoid NaN values during the later stages of training and prevent the learning process from stopping. For all cases the value of kerne_size was taken 3.  
 
+<div style="display: flex;">
+  <img src="scores_log/R-Square/R-Square (TCN).png" alt="R2-Score TCN Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/Test Loss/Test Loss (TCN).png" alt="Test Loss TCN Models" width="400" height="200">
+</div>
