@@ -16,9 +16,7 @@ Also, exogenous variables like oil prices and gold prices were added. Furthermor
 In the end, since it is stock data, the technical indicator <b> Relative Strength Index (RSI) </b> was also added. The Relative Strength Index (RSI) is a technical indicator used in financial markets to measure the speed and magnitude of price movements. It ranges from 0 to 100 and is used to evaluate overbought or oversold conditions in a stock. A common interpretation is that an RSI value above 70 suggests that a stock is overbought, while a value below 30 indicates it may be oversold. RSI can be useful in stock price prediction as it helps to identify potential reversal points or trends in market behavior. By integrating it into deep learning models, it can provide insights into momentum and market sentiment, which are crucial for time-series forecasting of stock prices.
 It is calculated as:
 
-$$
-RSI = 100 - \left( \frac{100}{1 + \frac{\text{Average Gain}}{\text{Average Loss}}} \right)
-$$
+
 
 To find the best window size, the dataset was trained on 7 days, 20 days, 50 days, and 100 days. The aim was to capture the short-term as well as the long-term pattern.   
 
