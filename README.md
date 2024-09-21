@@ -126,3 +126,9 @@ But model seems to perform better when learnig rate was constant which is clearl
 
 
 Also please note that <b> decoder </b> is not used in this case because the task involves one-step prediction, where the model directly forecasts the next value in the sequence without requiring the autoregressive decoding process typically used for generating sequential outputs in language modeling tasks.
+
+Below graph shows the r-square with or without learning rate scheduler. 
+<div style="display: flex;">
+  <img src="scores_log/R-Square/R-Square (Transformer).png" alt="R2-Score N-BEATS Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/Test Loss/Test Loss (Transformer).png" alt="Test Loss N-BEATS Models" width="400" height="200">
+</div>
