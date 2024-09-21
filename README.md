@@ -25,7 +25,6 @@ $$
 To find the best window size, the dataset was trained on 7 days, 20 days, 50 days, and 100 days. The aim was to capture the short-term as well as the long-term pattern.   
 
 <h2> Starting Models: </h2> The next task was to try various models.  
-<br/>
 <h3> Model-1: Long Short Term Memory (LSTM) </h3> <br/>
 LSTMs are basic comparison points in any time-series forecasting. Generally, they perform best when the data is not very large, which is the case with our dataset. 
 So, it was expected to perform well. I compared various window sizes as mentioned above; the best R<sup>2</sup> score was achieved with the 100-day window. Thus, the model is capturing the long-term trend.
@@ -35,9 +34,7 @@ So, it was expected to perform well. I compared various window sizes as mentione
   <img src="scores_log/Test Loss/Test Loss (LSTM).png" alt="Test Loss LSTM Models" width="400" height="200">
 </div>
 
-
-<br/> <br/> 
-<h3> Model-2:  GRU (Gated Recurrent Unit) </h3>: <br/>
+<h3> Model-2:  GRU (Gated Recurrent Unit) </h3>: 
 GRU models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
 
 The graph shows that the 50-day window size performs the best among all tested configurations, achieving the highest R-square value, indicating it captures the optimal amount of historical data for accurate predictions. Shorter windows (7 and 20 days) underperform, suggesting insufficient historical context, while the 100-day window, though capturing more data, does not improve further, possibly due to overfitting or increased noise.
@@ -48,9 +45,9 @@ The graph shows that the 50-day window size performs the best among all tested c
   <img src="scores_log/Test Loss/Test Loss (GRU).png" alt="Test Loss GRU Models" width="400" height="200">
 </div>
 
-<br/> 
 
-<h3> Model-3: Temporal Convolution Model (TCN) </h3>: <br/>  
+
+<h3> Model-3: Temporal Convolution Model (TCN) </h3>: 
 TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
 
 Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. When comparing the performance of this model to RNN variants, the performance is not as good. Similar to the GRU, the 50-day window size works best here as well.
@@ -67,7 +64,7 @@ Below is the given model architecture of the TCN as proposed in research paper: 
  <img src="scores_log/tcn.png" alt="TCN Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
 
-<h3> Model-4: N-Beats </h3> <br/> 
+<h3> Model-4: N-Beats </h3> 
 The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
 
 So, to capture trend and seasonality in the model, two different classes were defined. Seasonality is captured using by generating Fourier series components—specifically, sine and cosine terms—for both historical (backcast) and future (forecast) time windows. By decomposing the time series into multiple harmonics, the function allows the model to represent and learn complex cyclical patterns that occur at different frequencies. This approach enables the N-Beats model to effectively identify and forecast seasonal trends, making it well-suited for time series data with regular, repeating patterns, such as those seen in sales, weather, or financial data.
@@ -97,7 +94,7 @@ The graph below shows that model perform best till what all other models that I 
 Below is the given model architecture of the N-Beats as proposed in research paper: <br/>
  <img src="scores_log/n_beats.png" alt="N-Beats Model Architecture" width="500" height="280" style="margin-right: 10px;">
 
-<h3> Model-5: Transformer Model </h3> <br/>
+<h3> Model-5: Transformer Model </h3> 
 The Transformer model, originally designed for natural language processing tasks, has emerged as a powerful architecture for time series forecasting due to its ability to capture complex temporal dependencies and patterns. Unlike traditional recurrent neural networks (RNNs) that process data sequentially, the Transformer employs self-attention mechanisms, allowing it to directly focus on the most relevant parts of the input sequence, regardless of their position. This capability makes it particularly effective for time series data, where capturing both short-term fluctuations and long-term trends is crucial.
 
 As mentioned transformer uses attention and self-attention mechanism, the Query, Key, and Value vectors are used in the self-attention mechanism to determine the relevance of each input token to others, allowing the model to focus on important parts of the sequence when making predictions. Queries are matched against Keys to generate attention scores, which are then applied to Values to produce the output, capturing the relationships between different time steps.  
@@ -151,7 +148,7 @@ As we can see that above in the image, R-square is negative with learning rate s
 Below is the given model architecture of the Transformer as proposed in research paper: <br/>
  <img src="scores_log/transformer.png" alt="Transformer Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
-<h3> Model-6: Temporal Fusion Transformer </h3> <br/>
+<h3> Model-6: Temporal Fusion Transformer </h3> 
 So, far we have seen that, we have either used RNN variants for prediction or in last model we have used attention mechanism architecture. But what if we can combine both of the architecture. Temporal Fusion Transformer (TFT) uses both RNN and attention mechanisms. Specifically, it employs recurrent neural networks (often GRU layers) to capture sequential dependencies and learn temporal patterns in the data. Simultaneously, it integrates attention mechanisms, including multi-head attention, to focus on the most relevant parts of the input sequence and dynamically weigh features. This combination allows TFT to effectively model both temporal dependencies and feature importance, enhancing its interpretability and performance in time series forecasting tasks.
 
 In developing the Temporal Fusion Transformer (TFT), following approach was taken inspired from the research paper:
@@ -210,7 +207,7 @@ Oil Prices | Continuous
 Below is the given model architecture of the Temporal Fusion Transformer (TFT) as proposed in research paper: <br/>
  <img src="scores_log/tft.png" alt="TFT Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
-<h3> Model-7: Informer Model </h3> <br/>
+<h3> Model-7: Informer Model </h3> 
 The Informer model was developed to address the challenges of long-sequence time series forecasting, particularly the high computational cost and inefficiencies of standard Transformer models. Informer introduces a sparse self-attention mechanism that selectively attends to the most relevant parts of the sequence, significantly reducing memory and computation while maintaining high forecasting accuracy. By integrating an encoder-decoder architecture with enhanced positional encoding and attention distillation techniques, Informer effectively captures complex temporal dependencies, making it well-suited for large-scale, data-intensive forecasting tasks across various domains.
 
 Here is the workflow of the informer model:
