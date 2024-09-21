@@ -63,8 +63,8 @@ However, compared to RNN variants, I started with a lower learning rate. The lea
 </div>
 <br/>
 
-Below is the given model architecture of the TCN as proposed in research paper:
- <img src="scores_log/tcn.png" alt="TCN Model Architecture" width="400" height="200" style="margin-right: 10px;">
+Below is the given model architecture of the TCN as proposed in research paper: <br/>
+ <img src="scores_log/tcn.png" alt="TCN Model Architecture" width="500" height="300" style="margin-right: 10px;">
 
 
 <b> Model-4: N-Beats </b> <br/> 
