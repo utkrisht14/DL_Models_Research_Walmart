@@ -239,3 +239,6 @@ From the below graph, the model has shown good performance when the given window
 Below is the given model architecture of the Informer as proposed in research paper: <br/>
  <img src="scores_log/informer.png" alt="Informer Model Architecture" width="500" height="220" style="margin-right: 10px;">
 
+<h2> Results: </h2>
+Various model has been build to check the which model performs best on the data given. Since dataset was small, in most of the cases RNN variants outperfom the Transfomer models. Also window size of 20 has shown promising output as compared to other window size. Out of all the models, <b> N-Beats </b> model has shown best performance. Below table summarizes for which model, was the best window size and also mentione the running time. Please note that there is also `EarlyStopping` function is applied to it. 
+
