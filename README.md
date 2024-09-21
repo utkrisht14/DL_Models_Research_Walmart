@@ -73,6 +73,8 @@ These are parameters that were used for this model:
 <tr> <td> Polynomial degree for trend block </td> <td> 2 </td> </tr>
 </table>  
 
+
+The graph below shows that model perform best till what all other models that I have tried. Also, it shows that 20 days window is best in capturing the pattern best than other windows, followed by 7-days window. With the 100-day window showing the lowest R-square, suggesting that shorter windows capture the essential patterns better in this scenario. 
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (N- Beats) .png" alt="R2-Score N-BEATS Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (N-Beats).png" alt="Test Loss N-BEATS Models" width="400" height="200">
