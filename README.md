@@ -25,8 +25,7 @@ To find the best window size, the dataset was trained on 7 days, 20 days, 50 day
 <h2> Starting Models: </h2> The next task was to try various models.  
 <br/>
 <b> Model-1: Long Short Term Memory (LSTM) </b> LSTMs are basic comparison points in any time-series forecasting. Generally, they perform best when the data is not very large, which is the case with our dataset. 
-So, it was expected to perform well. I tried to compare against various window sizes as mentioned above; the best R<sup>2</sup> score was given by the 100-day window. Thus, the model is capturing the long-term trend.
-
+So, it was expected to perform well. I compared various window sizes as mentioned above; the best R<sup>2</sup> score was achieved with the 100-day window. Thus, the model is capturing the long-term trend.
 
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (LSTM).png" alt="R2-Score LSTM Models" width="400" height="200" style="margin-right: 10px;">
@@ -37,6 +36,7 @@ So, it was expected to perform well. I tried to compare against various window s
 <b> Model-2: </b> GRU (Gated Recurrent Unit) models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
 
 The graph shows that the 50-day window size performs the best among all tested configurations, achieving the highest R-square value, indicating it captures the optimal amount of historical data for accurate predictions. Shorter windows (7 and 20 days) underperform, suggesting insufficient historical context, while the 100-day window, though capturing more data, does not improve further, possibly due to overfitting or increased noise.
+
 
 <div style="display: flex;">
   <img src="scores_log/R-Square/R-Square (GRU).png" alt="R2-Score GRU Models" width="400" height="200" style="margin-right: 10px;">
