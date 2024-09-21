@@ -32,6 +32,7 @@ So, it was expected to perform well. I compared various window sizes as mentione
   <img src="scores_log/Test Loss/Test Loss (LSTM).png" alt="Test Loss LSTM Models" width="400" height="200">
 </div>
 
+
 <br/> <br/> 
 <b> Model-2: </b> GRU (Gated Recurrent Unit) models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
 
@@ -71,6 +72,12 @@ These are parameters that were used for this model:
 <tr> <td> Number of harmonics for Fourier Series </td> <td> 10 </td> </tr>
 <tr> <td> Polynomial degree for trend block </td> <td> 2 </td> </tr>
 </table>  
+
+<div style="display: flex;">
+  <img src="scores_log/R-Square/R-Square (N-BEATS).png" alt="R2-Score N-BEATS Models" width="400" height="200" style="margin-right: 10px;">
+  <img src="scores_log/Test Loss/Test Loss (N-BEATS).png" alt="Test Loss N-BEATS Models" width="400" height="200">
+</div>
+
 
 
 
