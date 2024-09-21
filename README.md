@@ -242,3 +242,13 @@ Below is the given model architecture of the Informer as proposed in research pa
 <h2> Results: </h2>
 Various model has been build to check the which model performs best on the data given. Since dataset was small, in most of the cases RNN variants outperfom the Transfomer models. Also window size of 20 has shown promising output as compared to other window size. Out of all the models, <b> N-Beats </b> model has shown best performance. Below table summarizes for which model, was the best window size and also mentione the running time. Please note that there is also `EarlyStopping` function is applied to it. 
 
+| Model Name                    | Best Window Size | Running time on GPU | R2-Score |
+|-------------------------------|------------------|---------------------|----------|
+| LSTM                          | 100              | 1m 11s              | 0.82166  |
+| GRU                           | 50               | 1m 1s               | 0.885    |
+| Temporal Convolution Network  | 50               | 1m 30s              | 0.82263  |
+| N-Beats                       | 20               | 4m 46s              | 0.89899  |
+| Transformer (No LR Scheduler) | 7                | 1m 51s              | 0.74     |
+| Temporal Fusion Transformer   | 20               | 6m 23s              | 0.62399  |
+| Informer                      | 20               | 6m 32s              | 0.76795  |
+
