@@ -24,7 +24,8 @@ To find the best window size, the dataset was trained on 7 days, 20 days, 50 day
 
 <h2> Starting Models: </h2> The next task was to try various models.  
 <br/>
-<b> Model-1: Long Short Term Memory (LSTM) </b> LSTMs are basic comparison points in any time-series forecasting. Generally, they perform best when the data is not very large, which is the case with our dataset. 
+<b> Model-1: Long Short Term Memory (LSTM) </b> <br/>
+LSTMs are basic comparison points in any time-series forecasting. Generally, they perform best when the data is not very large, which is the case with our dataset. 
 So, it was expected to perform well. I compared various window sizes as mentioned above; the best R<sup>2</sup> score was achieved with the 100-day window. Thus, the model is capturing the long-term trend.
 
 <div style="display: flex;">
@@ -34,7 +35,8 @@ So, it was expected to perform well. I compared various window sizes as mentione
 
 
 <br/> <br/> 
-<b> Model-2: </b> GRU (Gated Recurrent Unit) models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
+<b> Model-2:  GRU (Gated Recurrent Unit) </b>: <br/>
+GRU models are simplified versions of LSTMs, designed to capture long-term dependencies in sequential data with fewer parameters and a simpler architecture, making them faster to train. Unlike LSTMs, GRUs merge the forget and input gates into a single update gate and lack an output gate, which reduces computational complexity but might result in slightly less control over memory management compared to LSTMs.
 
 The graph shows that the 50-day window size performs the best among all tested configurations, achieving the highest R-square value, indicating it captures the optimal amount of historical data for accurate predictions. Shorter windows (7 and 20 days) underperform, suggesting insufficient historical context, while the 100-day window, though capturing more data, does not improve further, possibly due to overfitting or increased noise.
 
@@ -45,7 +47,8 @@ The graph shows that the 50-day window size performs the best among all tested c
 </div>
 
 
-<b> Model-3: Temporal Convolution Model (TCN) </b>: TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
+<b> Model-3: Temporal Convolution Model (TCN) </b>: <br/>  
+TCNs are a type of neural network architecture designed for sequence modeling, combining dilated causal convolutions and residual connections to capture long-range dependencies effectively. They allow for parallel processing of sequences, providing a flexible receptive field and efficiently learning temporal patterns without the need for recurrent structures.
 
 Like the other models, I also tried four windows to run the data. Each TCN model is built with stacked temporal blocks that apply dilated convolutions to capture long-range dependencies in the data. The code sets specific hyperparameters. When comparing the performance of this model to RNN variants, the performance is not as good. Similar to the GRU, the 50-day window size works best here as well.
 
@@ -56,7 +59,8 @@ However, compared to RNN variants, I started with a lower learning rate. The lea
   <img src="scores_log/Test Loss/Test Loss (TCN).png" alt="Test Loss TCN Models" width="400" height="200">
 </div>
 
-<b> Model-4: N-Beats </b> The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
+<b> Model-4: N-Beats </b> <br/> 
+The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
 
 So, to capture trend and seasonality in the model, two different classes were defined. Seasonality is captured using by generating Fourier series components—specifically, sine and cosine terms—for both historical (backcast) and future (forecast) time windows. By decomposing the time series into multiple harmonics, the function allows the model to represent and learn complex cyclical patterns that occur at different frequencies. This approach enables the N-Beats model to effectively identify and forecast seasonal trends, making it well-suited for time series data with regular, repeating patterns, such as those seen in sales, weather, or financial data.
 
@@ -80,6 +84,17 @@ The graph below shows that model perform best till what all other models that I 
   <img src="scores_log/Test Loss/Test Loss (N-Beats).png" alt="Test Loss N-BEATS Models" width="400" height="200">
 </div>
 
+
+<b> Model-5: Transformer Model </b> <br/>
+The Transformer model, originally designed for natural language processing tasks, has emerged as a powerful architecture for time series forecasting due to its ability to capture complex temporal dependencies and patterns. Unlike traditional recurrent neural networks (RNNs) that process data sequentially, the Transformer employs self-attention mechanisms, allowing it to directly focus on the most relevant parts of the input sequence, regardless of their position. This capability makes it particularly effective for time series data, where capturing both short-term fluctuations and long-term trends is crucial.
+
+Here I impelmented the model from two points of view. In one I keep the learning rate constant and in another learning rate was changing as it was mentioned in the paper.  
+
+$$
+\[
+\text{lrate} = d_{\text{model}}^{-0.5} \cdot \min\left(\text{step\_num}^{-0.5}, \text{step\_num} \cdot \text{warmup\_steps}^{-1.5}\right)
+\]
+$$
 
 
 
