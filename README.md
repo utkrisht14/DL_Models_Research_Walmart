@@ -54,3 +54,23 @@ However, compared to RNN variants, I started with a lower learning rate. The lea
   <img src="scores_log/R-Square/R-Square (TCN).png" alt="R2-Score TCN Models" width="400" height="200" style="margin-right: 10px;">
   <img src="scores_log/Test Loss/Test Loss (TCN).png" alt="Test Loss TCN Models" width="400" height="200">
 </div>
+
+<b> Model-4: N-Beats </b> The N-Beats model is a powerful deep learning architecture specifically designed for univariate and multivariate time series forecasting. It uses a stack of fully connected neural networks to directly forecast time series data, leveraging backward and forward residual blocks to capture complex patterns, trends, and seasonality without requiring domain-specific feature engineering. N-Beats is known for its flexibility, high performance, and ability to generalize well across diverse time series datasets.
+
+So, to capture trend and seasonality in the model, two different classes were defined. Seasonality is captured using by generating Fourier series components—specifically, sine and cosine terms—for both historical (backcast) and future (forecast) time windows. By decomposing the time series into multiple harmonics, the function allows the model to represent and learn complex cyclical patterns that occur at different frequencies. This approach enables the N-Beats model to effectively identify and forecast seasonal trends, making it well-suited for time series data with regular, repeating patterns, such as those seen in sales, weather, or financial data.
+
+Similarly polynomial trend was captured using generating polynomial bases for both historical (backcast) and future (forecast) periods. By creating polynomial terms of increasing degrees (up to a specified degree) from the time vector, trend component allowed model to learn and represent linear, quadratic, or higher-order trends within the data. These polynomial components enable the N-Beats model to effectively model non-linear trends, making it well-suited for forecasting scenarios where the data exhibits gradual shifts, growth, or decay over time, thus enhancing the model's overall predictive performance.
+
+These are parameters that were used for this model:
+<table> 
+<tr> <td> Hidden Size </td> <td> 256 </td> </tr>
+<tr> <td> Number of blocks (trend, seasonality) </td> <td> 4 </td> </tr>
+<tr> <td> Number of Layers </td> <td> 3 </td> </tr>
+<tr> <td> Forecast Length </td> <td> 1 </td> </tr>
+<tr> <td> Harmonics </td> <td> 10 </td> </tr>
+<tr> <td> Polynomial degree for trend block </td> <td> 2 </td> </tr>
+</table>  
+
+
+
+
