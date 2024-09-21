@@ -182,9 +182,10 @@ Day After Weekend | Binary
 Share opening price | Continuous
 Share highest price | Continuous
 Share lowest price | Continuous
+Volume traded | Continuous
 Relative Strength Index | Continuous
 Volatility Index | Continuous
-Day After Holiday | Continuous
+Gold Prices | Continuous
 Oil Prices | Continuous
 
 </td>
