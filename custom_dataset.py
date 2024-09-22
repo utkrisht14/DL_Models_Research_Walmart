@@ -14,7 +14,7 @@ class CustomDataset(torch.utils.data.Dataset):
         self.label_column = label_column
         self.input_window_size = input_window_size
         self.prediction_window_size = prediction_window_size
-        self.model_type = model_type  # Specify model type to handle N-Beats-specific adjustments
+        self.model_type = model_type  # For some specific model's architecture
 
         # Separate features and labels
         self.features = self.data.drop(columns=[self.label_column]).values
@@ -35,9 +35,9 @@ class CustomDataset(torch.utils.data.Dataset):
         # Extract the prediction
         y = self.labels[idx + self.input_window_size: idx + self.input_window_size + self.prediction_window_size]
 
-        # If it's for the N-Beats model, adjust the shape of the target 'y'
+        # For N-Beats model, adjust the shape of the target "y"
         if self.model_type == "nbeats":
-            y = y.reshape(-1)  # "y" is flattened for N-Beats forecast (1D target)
+            y = y.reshape(-1)  # "y" is flattened for N-Beats forecast 
 
         return torch.tensor(x, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
 
@@ -52,7 +52,7 @@ class CustomDataset(torch.utils.data.Dataset):
         return normalized_data, min_val, max_val
 
 
-# Wrap the logic inside a function so that it can be called externally
+# For the purpose of calling externally
 def prepare_dataloaders(df, label_column, input_window_size, prediction_window_size, batch_size, model_type="generic"):
     test_size = int(0.2 * len(df))
 
