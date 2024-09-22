@@ -8,10 +8,10 @@ fed = fredapi.Fred(api_key="API_KEY")
 
 # Download historical data for Walmart Inc.
 ticker = 'WMT'
-walmart_data = yf.download(ticker, start='1973-01-01', end='2024-09-05')
+walmart_data = yf.download(ticker, start="1973-01-01", end="2024-09-05")
 
 # Save the data to a CSV file
-walmart_data.to_csv('walmart_share_price.csv')
+walmart_data.to_csv("walmart_share_price.csv")
 
 # Display the first few rows
 walmart_data.head()
