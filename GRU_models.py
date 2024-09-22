@@ -29,11 +29,8 @@ class GRUModel(nn.Module):
         self.linear = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
-        # x should have shape as batch_first is True: (batch_size, sequence_length, input_size)
-        batch_size = x.size(0)
-
-        # Initialize hidden state and cell state
-        h0 = torch.zeros(self.num_layers, batch_size, self.hidden_size).to(x.device)
+        # Initialize hidden state 
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
 
         # Forward propagate through the GRU
         out, (h_n) = self.GRU(x, h0)
@@ -112,7 +109,6 @@ model_GRU_50 = GRUModel(input_size, hidden_size, num_layers, batch_first, output
 optimizer_50 = torch.optim.Adam(model_GRU_50.parameters(), weight_decay=1e-5, lr= learning_rate)
 
 # Train the model for 50 days window period
-# Train for 50 days window period
 wandb.init(project="Walmart_GRU", name="Model GRU 50 Days Window")  # Start a new W&B run
 train_dataset_50, test_dataset_50, train_dataloader_50, test_dataloader_50 = prepare_dataloaders(df, label_column="Adj Close Target", input_window_size=50, prediction_window_size=1, batch_size=32)
 overall_preds_denorm_GRU_50, overall_targets_denorm_GRU_50, overall_preds_GRU_50, overall_targets_GRU_50 = train_evaluate_model(
