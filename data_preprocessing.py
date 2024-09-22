@@ -35,12 +35,10 @@ gdp_growth_data = fed.get_series('A191RL1Q225SBEA', start_date=start_date, end_d
 # Consumer Confidence Index Data
 cci_data = fed.get_series('UMCSENT', start_date=start_date, end_date=end_date)
 
-# Get some data using Yahoo Finance.
-
-# Retrieve gold prices (use a gold-related ticker, e.g., 'GC=F' for gold futures)
+# Retrieve gold prices 
 gold_price_data = yf.download('GC=F', start=start_date, end=end_date)
 
-# Retrieve crude oil prices (use 'CL=F' for crude oil futures)
+# Retrieve crude oil prices 
 oil_price_data = yf.download('CL=F', start=start_date, end=end_date)
 
 # Exchange Rate Data
@@ -49,7 +47,7 @@ exchange_rate_data = yf.download('USDCHF=X', start=start_date, end=end_date)
 # VIX data
 vix_data = yf.download('^VIX', start=start_date, end=end_date)
 
-# Define holidays (e.g., Black Friday, Christmas)
+# Define holidays (Black Friday, Christmas etc.)
 black_friday_dates = pd.to_datetime([
     '1973-11-23', '1974-11-29', '1975-11-28', '1976-11-26',
     '1977-11-25', '1978-11-24', '1979-11-23', '1980-11-28',
@@ -97,7 +95,7 @@ day_after_election_dates = election_dates + pd.Timedelta(days=1)
 df = pd.read_csv('walmart_share_price.csv', index_col='Date', parse_dates=True)
 
 # Add day_before_weekend feature (Fridays)
-df['day_before_weekend'] = (df.index.weekday == 4).astype(int)  # 4 represents Friday
+df["day_before_weekend"] = (df.index.weekday == 4).astype(int)  # 4 represents Friday
 
 # Combine all holidays into one list using numpy.concatenate
 all_holidays = np.concatenate([black_friday_dates, christmas_dates])
@@ -107,13 +105,13 @@ day_before_holidays = all_holidays - pd.Timedelta(days=1)
 day_after_holidays = all_holidays + pd.Timedelta(days=1)
 
 # Mark if a day is the day before a holiday
-df['day_before_holiday'] = df.index.isin(day_before_holidays).astype(int)
+df["day_before_holiday"] = df.index.isin(day_before_holidays).astype(int)
 
 # Mark if a day is the day after a holiday
-df['day_after_holiday'] = df.index.isin(day_after_holidays).astype(int)
+df["day_after_holiday"] = df.index.isin(day_after_holidays).astype(int)
 
 # Mark if a day is the day after a weekend (Monday)
-df['day_after_weekend'] = (df.index.weekday == 0).astype(int)  # 0 represents Monday
+df["day_after_weekend"] = (df.index.weekday == 0).astype(int)  # 0 represents Monday
 
 # Make some data into dataframe for easy merge.
 
@@ -143,14 +141,13 @@ vix_df.columns = ["VIX"]
 
 # Make a function to merge all the data into a dataframe.
 def custom_fill_all(df, cpi_df, unemployment_df, cci_df):
-    # Step 1: Perform a left join on the index to include all rows from df and only matching rows from other dataframes
-    # Merging CPI, unemployment, and CCI data with the master dataframe
+    # Merging CPI, unemployment, and CCI data with the main dataframe
     merged_df = df.join([cpi_df, unemployment_df, cci_df, gdp_df, oil_df, gold_df, exchange_df, vix_df], how='left')
 
-    # Step 2: Backward-fill (bfill) for initial missing values before the first available data point
+    # Backward-fill for initial missing values before the first available data point
     merged_df.bfill(inplace=True)
 
-    # Step 3: Forward-fill (ffill) for all remaining missing values after encountering the first available data point
+    # Forward-fill for all remaining missing values after encountering the first available data point
     merged_df.ffill(inplace=True)
 
     return merged_df
@@ -170,7 +167,7 @@ def compute_rsi(series, window=14):
     # Calculate the price differences
     delta = series.diff()
 
-    # Make two series: one for gains (positive deltas) and one for losses (negative deltas)
+    # Make two series: one for gains and one for losses 
     gain = (delta.where(delta > 0, 0)).fillna(0)
     loss = (-delta.where(delta < 0, 0)).fillna(0)
 
@@ -187,7 +184,7 @@ def compute_rsi(series, window=14):
     return rsi
 
 
-# Run the function
+
 merged_df["RSI"] = compute_rsi(merged_df["Adj Close"], window=14)
 
 # Create the target column for the next day's Adjusted Close price
