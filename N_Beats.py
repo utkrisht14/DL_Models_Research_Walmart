@@ -403,9 +403,6 @@ wandb.log({"Comparison of N-BEATS Models": wandb.Image("comparison_plot.png")}) 
 wandb.finish()
 
 # Save the predictions in a DataFrame and log them
-
-# Save to DataFrame
-# Arrays should be 1-dimensional
 # Find the minimum length across all arrays
 min_length = min(len(overall_targets_denorm_7),
                  len(overall_preds_denorm_7),
