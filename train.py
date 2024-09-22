@@ -30,7 +30,7 @@ def train_evaluate_model(model, model_name, optimizer, criterion, train_dataload
     - epochs: Number of training epochs.
     - lr: Learning rate.
     - input_window_size: Input sequence window size.
-    - scheduler: learning rate scheduler (default is None).
+    - scheduler: learning rate scheduler. Default is None.
     - device: Device to run the model on
     - model_type: The type of the model (used for input/output formatting).
     - patience: Number of epochs to wait before stopping if no improvement in test loss.
@@ -68,7 +68,7 @@ def train_evaluate_model(model, model_name, optimizer, criterion, train_dataload
 
             # Handle reshaping for different models
             if model_type == "nbeats":
-                y_train = y_train.squeeze(-1)  # Flatten the target for N-Beats [batch_size]
+                y_train = y_train.squeeze(-1)  # Flatten the target for N-Beats 
             elif model_type == "tcn" or model_type == "informer":
                 y_train = y_train.view(-1)  # Flatten target for TCN or Informer
             else:
@@ -82,7 +82,7 @@ def train_evaluate_model(model, model_name, optimizer, criterion, train_dataload
 
             # Flatten predictions if necessary
             if model_type == "nbeats":
-                y_pred = y_pred.squeeze(-1)  # Flatten predictions for N-Beats [batch_size]
+                y_pred = y_pred.squeeze(-1)  # Flatten predictions for N-Beats 
             elif model_type == "tcn" or model_type == "informer":
                 y_pred = y_pred.view(-1)  # Flatten predictions for TCN or Informer
 
@@ -177,8 +177,7 @@ def train_evaluate_model(model, model_name, optimizer, criterion, train_dataload
     # Metrics on normalized data
     overall_mae_norm = mean_absolute_error(overall_preds, overall_targets)
     overall_mse_norm = mean_squared_error(overall_preds, overall_targets)
-    r_square_norm = r2_score(overall_targets, overall_preds)
-
+   
     # Denormalize predictions and targets using test_dataset min/max values
     overall_preds_denorm = denormalize(overall_preds, test_dataset.labels_min, test_dataset.labels_max)
     overall_targets_denorm = denormalize(overall_targets, test_dataset.labels_min, test_dataset.labels_max)
