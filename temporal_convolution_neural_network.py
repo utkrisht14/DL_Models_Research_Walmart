@@ -60,7 +60,7 @@ class TCN(nn.Module):
 
         # Loop to create each temporal block with increasing dilation and stack them
         for i in range(num_levels):
-            dilation_size = 2 ** i  # Dilation increases exponentially [1, 2, 4, 8,...]
+            dilation_size = 2 ** i  # Dilation increases exponentially [1, 2, 4, 8,...] as mentioned in paper
             in_channels = num_inputs if i == 0 else num_channels[i-1]  # Input channels for the first block
             out_channels = num_channels[i]  # Output channels for each block
 
