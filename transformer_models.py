@@ -24,9 +24,10 @@ print(device)
 # Since transformers don't inherently understand the order of the sequence.
 # Because of the self-attention mechanism, positional encodings are added to provide the model with information about the relative positions of the time steps.
 class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, max_len=5000):
+    def __init__(self, d_model, max_len=5000, batch_first=True):
         super().__init__()
 
+        self.batch_first = True
         # Create a matrix to store the positional encodings
         pe = torch.zeros(max_len, d_model)
 
@@ -43,19 +44,22 @@ class PositionalEncoding(nn.Module):
         # Apply cosine to odd indices in the positional encoding according to paper
         pe[:, 1::2] = torch.cos(position * div_term)
 
-        # Add an extra dimension to the positional encodings so that they can be easily added to the input embeddings
-        # Shape after unsqueeze: (1, max_len, d_model)
-        # Shape after transpose: (max_len, 1, d_model)
-        pe = pe.unsqueeze(0).transpose(0, 1)
+        # For the purpose of adding positional encoding
+        if self.batch_first:
+            pe = pe.unsqueeze(0)  # Shape: (1, max_len, d_model)
+        else:
+            pe = pe.unsqueeze(1)  # Shape: (max_len, 1, d_model)
 
         # Register the positional encoding matrix as a buffer, meaning that it won't be updated during training
         self.register_buffer("pe", pe)
 
     # Forward method to add positional encodings to the input sequence
     def forward(self, x):
-        # Add the positional encoding to the input embeddings.
-        # x is expected to have shape (seq_len, batch_size, d_model), and we add the positional encoding based on the sequence length.
-        return x + self.pe[:x.size(0), :]
+        if self.batch_first:
+            x = x + self.pe[:, :x.size(1), :]
+        else:
+            x = x + self.pe[:x.size(0), :, :]
+        return x
 
 
 # Define the Transformer Model Architecture
@@ -81,13 +85,12 @@ class TransformerModels(nn.Module):
         # shape of src: (batch_size, seq_len, num_inputs)
         src = self.input_embedding(src)  # Embed the input to d_model dimensions
         src = self.positional_encoding(src)  # Add positional encoding
-        src = src.permute(1, 0, 2)  # Transformer expects (seq_len, batch_size, d_model)
 
         # Pass through the Transformer Encoder
         transformer_output = self.transformer_encoder(src)
 
-        # Take the output of the last time step (sequence length, batch, d_model) -> (batch, d_model)
-        last_time_step_output = transformer_output[-1, :, :]  # Take the last time step for forecasting
+        # Take the output of the last time step (batch, sequence length, d_model) -> (batch, d_model)
+        last_time_step_output = transformer_output[:, -1, :]  # Take the last time step for forecasting
 
         # Pass through a linear layer to get the prediction for n steps
         output = self.fc_out(last_time_step_output)
